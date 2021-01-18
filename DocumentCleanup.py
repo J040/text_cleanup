@@ -62,24 +62,27 @@ if __name__ == '__main__':
 
     # Busca o diretório atual.
     curr_path = os.getcwd()
-    path = curr_path + "\\treated_images"
+    path = curr_path + '/treated_images'
 
     # Tenta criar o diretório atual.
-    try:
-        os.mkdir('treated_images')
-    except OSError:
-        print ("Falha ao criar o diretório %s." % path)
+    if os.path.isdir('./treated_images'):
+        print('Diretório Treated_images já existente')
     else:
-        print ("Sucesso ao criar o diretório %s!" % path)
+        try:
+            os.mkdir('treated_images')
+        except OSError:
+            print ("Falha ao criar o diretório %s." % path)
+        else:
+            print ("Sucesso ao criar o diretório %s!" % path)
 
     # Busca todos os arquivos do diretório "\noisy_data".
-    filelist = os.listdir('.\\noisy_data\\')
+    filelist = os.listdir("./noisy_data/")
 
     for file in filelist:
         # Caso o arquivo possua a extensão ".png"...
         if file.endswith(".png"):
             # Leitura da imagem.
-            image = cv2.imread('.\\noisy_data\\' + str(file))
+            image = cv2.imread("./noisy_data/" + str(file))
 
             # Chama a função responsável pela rotação do texto.
             rotated_image = deskew(copy(image))
@@ -91,8 +94,8 @@ if __name__ == '__main__':
             
             # Tentativa de melhorar a imagem limiarizada final (Abertura e Fechamento também foram testadas).
             # kernel = np.array([[0, 0, 0],
-            #                     [0, 1, 1],
-            #                     [0, 1, 0]], dtype=np.uint8)
+            #                    [0, 1, 1],
+            #                    [0, 1, 0]], dtype=np.uint8)
             # thresh = cv2.bitwise_not(thresh)
             # erosion = cv2.erode(thresh,kernel,iterations = 1)
             # dilation = cv2.dilate(thresh,kernel,iterations = 1)
@@ -104,8 +107,8 @@ if __name__ == '__main__':
             cv2.imwrite(os.path.join(path , str(file)), thresh)
             
             # Caso queiram visualizar as imagens durante a execução.
-            cv2.imshow('original', image)
-            cv2.imshow('thresh', thresh)
+            # cv2.imshow('original', image)
+            # cv2.imshow('thresh', thresh)
             # cv2.imshow('erosion', erosion)
             # cv2.imshow('dilation', dilation)
             cv2.waitKey()
