@@ -7,6 +7,6 @@ Digital image processing project to make texts dirty images, readable texts.
 First you have to install all the dependencies that isn't especifield, sorry. :/
 
 ```bash
-Python3 
+Python3 DocumentCleanup.py
 ```
 
